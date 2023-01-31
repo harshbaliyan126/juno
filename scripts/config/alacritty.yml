@@ -30,8 +30,8 @@ cursor:
   unfocused_hollow: true
   # Live config reload (changes require restart)
 live_config_reload: true
-shell:
-  program: /usr/bin/zsh
+  #shell:
+  # program: /usr/bin/zsh
   #args:
     #- --login
 

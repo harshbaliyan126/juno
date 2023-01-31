@@ -7,10 +7,6 @@ fi
 
 TERMINAL_EMULATOR="$(cat "$1" | jq -r '.term.terminal_emulator')"
 
-if $TERMINAL_EMULATOR; then
-    exit 501
-fi
-
 CONFIG_ALACRITTY="$XDG_CONFIG_HOME/alacritty/alacritty.yml"
 CONFIG_KITTY="$XDG_CONFIG_HOME/kitty/kitty.conf"
 
@@ -27,7 +23,10 @@ alac() {
 
     # CONDITION TO FIND IF GIVEN THEME EXIST OR NOT ,IF NOT TERMINATE THE SCRIPT
 
-    if [[ $(grep -c ${ALAC_THEME} ./themes/${arr_terminal[0]}.json) -eq 0 ]]; then
+    echo "alac function"
+    pwd
+
+    if [[ $(grep -c ${ALAC_THEME} ./scripts/themes/${arr_terminal[0]}.json) -eq 0 ]]; then
         echo "Error 502: $ALAC_THEME theme doens't exist"
 	exit 502
     fi
@@ -37,16 +36,17 @@ alac() {
     if [[ -d "$XDG_CONFIG_HOME/alacritty" ]];then
 	if [[ -f "$CONFIG_ALACRITTY" ]]; then
 	    rm $CONFIG_ALACRITTY
-	    cp ./config/alacritty.yml $XDG_CONFIG_HOME/alacritty/
+	    cp ./scripts/config/alacritty.yml $XDG_CONFIG_HOME/alacritty/
 	else
-	    cp ./config/alacritty.yml $XDG_CONFIG_HOME/alacritty/
+	    cp ./scripts/config/alacritty.yml $XDG_CONFIG_HOME/alacritty/
 	fi
     else
+	echo "Creating config file ........"
 	mkdir $XDG_CONFIG_HOME/alacritty
-	cp ./config/alacritty.yml $XDG_CONFIG_HOME/alacritty/
+	cp ./scripts/config/alacritty.yml $XDG_CONFIG_HOME/alacritty/
     fi
 
-    THEMES=./themes/${arr_terminal[0]}.json
+    THEMES=./scripts/themes/${arr_terminal[0]}.json
 
     return
 }
@@ -59,7 +59,7 @@ kitty() {
 
     # CONDITION TO FIND IF GIVEN THEME EXIST OR NOT, IF NOT TERMINATE THE SCRIPT
 
-    if [[ $(grep -c ${KITTY_THEME} ./themes/${arr_terminal[1]}.json) -eq 0 ]]; then
+    if [[ $(grep -c ${KITTY_THEME} ./scripts/themes/${arr_terminal[1]}.json) -eq 0 ]]; then
         echo "Error 502: $KITTY_THEME theme doens't exist"
 	exit 502
     fi
@@ -69,16 +69,17 @@ kitty() {
     if [[ -d "./$XDG_CONFIG_HOME/kitty" ]];then
 	if [[ -f "$CONFIG_KITTY" ]]; then
 	    rm $CONFIG_KITTY
-	    cp ./config/kitty.conf $XDG_CONFIG_HOME/kitty/
+	    cp ./scripts/config/kitty.conf $XDG_CONFIG_HOME/kitty/
 	else
-	    cp ./config/kitty.conf $XDG_CONFIG_HOME/kitty
+	    cp ./scripts/config/kitty.conf $XDG_CONFIG_HOME/kitty
 	fi
     else
+	echo "Creating config file ........"
 	mkdir $XDG_CONFIG_HOME/kitty
-	cp config/kitty.conf $XDG_CONFIG_HOME/kitty/
+	cp ./scripts/config/kitty.conf $XDG_CONFIG_HOME/kitty/
     fi
 
-    THEMES=./themes/${arr_terminal[1]}.json
+    THEMES=./scripts/themes/${arr_terminal[1]}.json
 
     return
 }
@@ -128,12 +129,15 @@ elif [[ "$FONT" = "font-name-monoid" ]];then
     sudo pacman -S --needed --noconfirm ttf-monoid
     export font_family="Monoid"
 elif [[ "$FONT" = "font-name-source-code-pro" ]];then
-    sudo pacman -S --needed --noconfirm adobe-source-code-pro-fonts 
+    sudo pacman -S --needed --noconfirm adobe-source-code-pro-fonts
     export font_family="Source Code Pro"
 elif [[ "$FONT" = "font-name-ubuntu-font-family" ]];then
     sudo pacman -S --needed --noconfirm ttf-ubuntu-font-family
     export font_family="Ubuntu Mono"
+else
+    export font_family="monospace"
 fi
+
 
 echo "Font = $font_family"
 
@@ -162,7 +166,6 @@ export magenta_bright="$(cat "$THEMES" | jq -r --arg TERMINAL_THEME "$TERMINAL_T
 export cyan_bright="$(cat "$THEMES" | jq -r --arg TERMINAL_THEME "$TERMINAL_THEME" '.[] | select(.'$TERMINAL_THEME') | .'$TERMINAL_THEME'."cyan_bright"')"
 export white_bright="$(cat "$THEMES" | jq -r --arg TERMINAL_THEME "$TERMINAL_THEME" '.[] | select(.'$TERMINAL_THEME') | .'$TERMINAL_THEME'."white_bright"')"
 
-echo "Creating config file ........"
 # SUBSITUTING THE VALUES OF ENVIRONMENTAL VARIABLES
 
 if [[ "${TERMINAL_EMULATOR}" = "alacritty" ]]; then
