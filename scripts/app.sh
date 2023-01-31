@@ -1,5 +1,5 @@
 #!/bin/bash
-pacman -S --needed git base-devel
+sudo pacman -S --needed git base-devel
 git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
@@ -44,53 +44,53 @@ INSOMNIA="$(cat "$1" | jq -r '.dev_tools.insomnia')"
 ###sudo pacman -S --noconfirm --needed flatpak
 
 if [[ "$TERMINAL_EMULATOR" != "none" ]]; then
-    pacman -S --noconfirm --needed $TERMINAL_EMULATOR
+    sudo pacman -S --noconfirm --needed $TERMINAL_EMULATOR
 fi
 
 if [[ "$DESKTOP_ENV" != "none" ]]; then
-    pacman -S --noconfirm --needed $DESKTOP_ENV
+    sudo pacman -S --noconfirm --needed $DESKTOP_ENV
 fi
 
 if [[ "$TIL_WIN" != "none" ]]; then
-    pacman -S --noconfirm --needed $TIL_WIN
+    sudo pacman -S --noconfirm --needed $TIL_WIN
 fi
 
 if [[ "$LAUNCHER" != "none" ]]; then
-    pacman -S --noconfirm --needed $LAUNCHER
+    sudo pacman -S --noconfirm --needed $LAUNCHER
 fi
 
 #### PACKAGE
 
 if  $CHROMIUM;then
-    pacman -S --noconfirm --needed $CHROMIUM
+    sudo pacman -S --noconfirm --needed $CHROMIUM
 fi
 
 if  $SPOTIFY;then
-    pacman -S --noconfirm --needed spotify-launcher
+    sudo pacman -S --noconfirm --needed spotify-launcher
 fi
 
 if $FIREFOX;then
-    pacman -S --noconfirm --needed firefox
+    sudo pacman -S --noconfirm --needed firefox
 fi
 
 if $VLC;then
-    pacman -S --noconfirm --needed vlc
+    sudo pacman -S --noconfirm --needed vlc
 fi
 
 if $STEAM;then
-    pacman -S --noconfirm --needed steam
+    sudo pacman -S --noconfirm --needed steam
 fi
 
 if $DISCORD;then
-    pacman -S --noconfirm --needed discord
+    sudo pacman -S --noconfirm --needed discord
 fi
 
 if $GIMP;then
-    pacman -S --noconfirm --needed gimp
+    sudo pacman -S --noconfirm --needed gimp
 fi
 
 if $OBS_STUDIO;then
-    pacman -S --noconfirm --needed obs-studio
+    sudo pacman -S --noconfirm --needed obs-studio
 fi
 
 if $ZOOM;then
@@ -112,7 +112,7 @@ fi
 #### DEV TOOLS
 
 if $VSCODE;then
-    pacman -S --noconfirm --needed code
+    sudo pacman -S --noconfirm --needed code
 fi
 
 if $ATOM;then
@@ -120,11 +120,11 @@ if $ATOM;then
 fi
 
 if $NEOVIM;then
-    pacman -S --noconfirm --needed neovim
+    sudo pacman -S --noconfirm --needed neovim
 fi
 
 if $GEANY;then
-    pacman -S --noconfirm --needed geany
+    sudo pacman -S --noconfirm --needed geany
 fi
 
 if $SUBLIME;then
@@ -144,15 +144,15 @@ if $CLION;then
 fi
 
 if $IDC; then
-    pacman -S --noconfirm --needed intellij-idea-community-edition 4:2022.3.2-1
+    sudo pacman -S --noconfirm --needed intellij-idea-community-edition 4:2022.3.2-1
 fi
 
 if $IPC; then
-    pacman -S --noconfirm --needed pycharm-community-edition 2022.3.2-1
+    sudo pacman -S --noconfirm --needed pycharm-community-edition 2022.3.2-1
 fi
 
 if $WEBSTORM; then
-    pacman -S --noconfirm --needed webstorm 2022.3.1-1
+    sudo pacman -S --noconfirm --needed webstorm 2022.3.1-1
 fi
 
 if $POSTMAN; then
