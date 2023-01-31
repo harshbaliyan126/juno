@@ -1,4 +1,8 @@
 #!/bin/bash
+pacman -S --needed git base-devel
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
 
 TERMINAL_EMULATOR="$(cat "$1" | jq -r '.term.terminal_emulator')"
 DESKTOP_ENV="$(cat "$1" | jq -r '.desk_env.desk_env')"
@@ -23,7 +27,7 @@ STEAM="$(cat "$1" | jq -r '.package_install.steam')"
 ##########################################################
 
 VSCODE="$(cat "$1" | jq -r '.dev_tools.vscode')"
-BRACKETS="$(cat "$1" | jq -r '.dev_tools.atom')"
+ATOM="$(cat "$1" | jq -r '.dev_tools.atom')"
 NEOVIM="$(cat "$1" | jq -r '.dev_tools.neovim')"
 GEANY="$(cat "$1" | jq -r '.dev_tools.geany')"
 SUBLIME="$(cat "$1" | jq -r '.dev_tools.sublime_text')"
@@ -37,68 +41,68 @@ POSTMAN="$(cat "$1" | jq -r '.dev_tools.webstorm')"
 INSOMNIA="$(cat "$1" | jq -r '.dev_tools.insomnia')"
 
 
-sudo pacman -S --noconfirm --needed flatpak
+###sudo pacman -S --noconfirm --needed flatpak
 
 if [[ "$TERMINAL_EMULATOR" != "none" ]]; then
-    sudo pacman -S --noconfirm --needed $TERMINAL_EMULATOR
+    pacman -S --noconfirm --needed $TERMINAL_EMULATOR
 fi
 
 if [[ "$DESKTOP_ENV" != "none" ]]; then
-    sudo pacman -S --noconfirm --needed $DESKTOP_ENV
+    pacman -S --noconfirm --needed $DESKTOP_ENV
 fi
 
 if [[ "$TIL_WIN" != "none" ]]; then
-    sudo pacman -S --noconfirm --needed $TIL_WIN
+    pacman -S --noconfirm --needed $TIL_WIN
 fi
 
 if [[ "$LAUNCHER" != "none" ]]; then
-    sudo pacman -S --noconfirm --needed $LAUNCHER
+    pacman -S --noconfirm --needed $LAUNCHER
 fi
 
 #### PACKAGE
 
 if  $CHROMIUM;then
-    flatpak install flathub org.chromium.Chromium
+    pacman -S --noconfirm --needed $CHROMIUM
 fi
 
 if  $SPOTIFY;then
-    flatpak install flathub com.spotify.Client
+    pacman -S --noconfirm --needed spotify-launcher
 fi
 
 if $FIREFOX;then
-    flatpak install flathub org.mozilla.firefox
+    pacman -S --noconfirm --needed firefox
 fi
 
 if $VLC;then
-    flatpak install flathub org.videolan.VLC
+    pacman -S --noconfirm --needed vlc
 fi
 
 if $STEAM;then
-    flatpak install flathub com.valvesoftware.Steam
+    pacman -S --noconfirm --needed steam
 fi
 
 if $DISCORD;then
-    flatpak install flathub com.discordapp.Discord
+    pacman -S --noconfirm --needed discord
 fi
 
 if $GIMP;then
-    flatpak install flathub org.gimp.GIMP
+    pacman -S --noconfirm --needed gimp
 fi
 
 if $OBS_STUDIO;then
-    flatpak install flathub com.obsproject.Studio
+    pacman -S --noconfirm --needed obs-studio
 fi
 
 if $ZOOM;then
-    flatpak install flathub us.zoom.Zoom
+    yay -S --noconfirm --needed zoom
 fi
 
 if $MICRO_TEAM;then
-    flatpak install flathub com.microsoft.Teams
+    yay -S --noconfirm --needed teams
 fi
 
 if $LIBREOFFICE;then
-    flatpak install flathub org.libreoffice.LibreOffice
+    sudo pacman -S --noconfirm --needed libreoffice-still
 fi
 
 if $TELEGRAM;then
@@ -108,57 +112,53 @@ fi
 #### DEV TOOLS
 
 if $VSCODE;then
-    flatpak install flathub com.visualstudio.code
+    pacman -S --noconfirm --needed code
 fi
 
 if $ATOM;then
-    flatpak install flathub io.atom.Atom
+    yay -S --noconfirm --needed atom
 fi
 
 if $NEOVIM;then
-    sudo pacman -S --noconfirm --needed neovim
-fi
-
-if $BRACKETS;then
-    flatpak install flathub io.brackets.Brackets
+    pacman -S --noconfirm --needed neovim
 fi
 
 if $GEANY;then
-    flatpak install flathub org.geany.Geany
+    pacman -S --noconfirm --needed geany
 fi
 
 if $SUBLIME;then
-    flatpak install flathub com.sublimetext.three
+    yay -S --noconfirm --needed sublime-text-4
 fi
 
 if $AND_STUDIO;then
-    flatpak install flathub com.google.AndroidStudio
+    yay -S --noconfirm --needed android-studio
 fi
 
 if $EMACS;then
-    flatpak install flathub org.gnu.emacs
+    yay -S --noconfirm --needed emacs26-git
 fi
 
 if $CLION;then
-    flatpak install flathub com.jetbrains.CLion
+    yay -S --noconfirm --needed clion
 fi
 
 if $IDC; then
-    flatpak install flathub com.jetbrains.IntelliJ-IDEA-Community
+    pacman -S --noconfirm --needed intellij-idea-community-edition 4:2022.3.2-1
 fi
 
 if $IPC; then
-    flatpak install flathub com.jetbrains.PyCharm-Community
+    pacman -S --noconfirm --needed pycharm-community-edition 2022.3.2-1
 fi
 
 if $WEBSTORM; then
-    flatpak install flathub com.jetbrains.WebStorm
+    pacman -S --noconfirm --needed webstorm 2022.3.1-1
 fi
 
 if $POSTMAN; then
-    flatpak install flathub com.getpostman.Postman
+    yay -S --noconfirm --needed postman-bin
 fi
 
 if $INSOMNIA; then
-    flatpak install flathub rest.insomnia.Insomnia
+    yay -S --noconfirm --needed insomnia
 fi

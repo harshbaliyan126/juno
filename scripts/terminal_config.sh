@@ -6,6 +6,11 @@ if [[ ! -f "$1" ]]; then
 fi
 
 TERMINAL_EMULATOR="$(cat "$1" | jq -r '.term.terminal_emulator')"
+
+if $TERMINAL_EMULATOR; then
+    exit 501
+fi
+
 CONFIG_ALACRITTY="$XDG_CONFIG_HOME/alacritty/alacritty.yml"
 CONFIG_KITTY="$XDG_CONFIG_HOME/kitty/kitty.conf"
 
@@ -97,25 +102,36 @@ fi
 
 FONT="$(cat "$1" | jq -r '.font_theme.font_name')"
 
+
 if [[ "$FONT" = "font-name-fira-code" ]];then
+    sudo pacman -S --needed --noconfirm ttf-fira-code
     export font_family="Fira Code"
 elif [[ "$FONT" = "font-name-fantasque-sans-mono" ]];then
+    sudo pacman -S --needed --noconfirm ttf-fantasque-sans-mono
     export font_family="Fantasque Sans Mono"
 elif [[ "$FONT" = "font-name-hack" ]];then
+    sudo pacman -S --needed --noconfirm ttf-hack
     export font_family="Hack"
 elif [[ "$FONT" = "font-name-ibm-plex" ]];then
+    sudo pacman -S --needed --noconfirm ttf-ibm-plex
     export font_family="IBM Plex Mono"
 elif [[ "$FONT" = "font-name-iosevka" ]];then
+    sudo pacman -S --needed --noconfirm ttf-iosevka-nerd
     export font_family="Iosevka"
 elif [[ "$FONT" = "font-name-inconsolata" ]];then
+    sudo pacman -S --needed --noconfirm ttf-inconsolata
     export font_family="Inconsolata"
 elif [[ "$FONT" = "font-name-jetbrains-mono" ]];then
+    sudo pacman -S --needed --noconfirm ttf-jetbrains-mono
     export font_family="Jetbrains Mono"
-elif [[ "$FONT" = "font-name-monid" ]];then
-    export font_family="Monid"
+elif [[ "$FONT" = "font-name-monoid" ]];then
+    sudo pacman -S --needed --noconfirm ttf-monoid
+    export font_family="Monoid"
 elif [[ "$FONT" = "font-name-source-code-pro" ]];then
+    sudo pacman -S --needed --noconfirm adobe-source-code-pro-fonts 
     export font_family="Source Code Pro"
 elif [[ "$FONT" = "font-name-ubuntu-font-family" ]];then
+    sudo pacman -S --needed --noconfirm ttf-ubuntu-font-family
     export font_family="Ubuntu Mono"
 fi
 
